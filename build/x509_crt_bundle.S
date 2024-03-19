@@ -1,4 +1,4 @@
-/* * Data converted from /home/hhouse/workspace/lv_port_esp32/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /home/hhouse/eclipse-workspace/ESP_Numpad/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

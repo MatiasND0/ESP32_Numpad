@@ -2118,40 +2118,6 @@
     {
         "children": [
             {
-                "children": [],
-                "depends_on": null,
-                "help": "GPIO number (IOxx) from which to sample the Rotary Encoder 'A' output.\n\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used.",
-                "id": "ROT_ENC_A_GPIO",
-                "name": "ROT_ENC_A_GPIO",
-                "range": [
-                    0,
-                    39
-                ],
-                "title": "Rotary Encoder A output GPIO number",
-                "type": "int"
-            },
-            {
-                "children": [],
-                "depends_on": null,
-                "help": "GPIO number (IOxx) from which to sample the Rotary Encoder 'B' output.\n\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used.",
-                "id": "ROT_ENC_B_GPIO",
-                "name": "ROT_ENC_B_GPIO",
-                "range": [
-                    0,
-                    39
-                ],
-                "title": "Rotary Encoder B output GPIO number",
-                "type": "int"
-            }
-        ],
-        "depends_on": null,
-        "id": "esp32-rotary-encoder-configuration",
-        "title": "esp32-rotary-encoder Configuration",
-        "type": "menu"
-    },
-    {
-        "children": [
-            {
                 "children": [
                     {
                         "children": [],
@@ -20347,84 +20313,6 @@
                 "depends_on": null,
                 "id": "component-config-supplicant",
                 "title": "Supplicant",
-                "type": "menu"
-            },
-            {
-                "children": [
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": null,
-                        "id": "LV_EX_PRINTF",
-                        "name": "LV_EX_PRINTF",
-                        "range": null,
-                        "title": "Enable printf-ing data in demos and examples.",
-                        "type": "bool"
-                    },
-                    {
-                        "children": [
-                            {
-                                "children": [],
-                                "depends_on": "<choice LV_EX_CHOICE>",
-                                "help": null,
-                                "id": "LV_USE_DEMO_WIDGETS",
-                                "name": "LV_USE_DEMO_WIDGETS",
-                                "range": null,
-                                "title": "Show demo widgets.",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "<choice LV_EX_CHOICE>",
-                                "help": null,
-                                "id": "LV_USE_DEMO_KEYPAD_AND_ENCODER",
-                                "name": "LV_USE_DEMO_KEYPAD_AND_ENCODER",
-                                "range": null,
-                                "title": "Demonstrate the usage of encoder and keyboard.",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "<choice LV_EX_CHOICE>",
-                                "help": null,
-                                "id": "LV_USE_DEMO_BENCHMARK",
-                                "name": "LV_USE_DEMO_BENCHMARK",
-                                "range": null,
-                                "title": "Benchmark your system.",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "<choice LV_EX_CHOICE>",
-                                "help": null,
-                                "id": "LV_USE_DEMO_STRESS",
-                                "name": "LV_USE_DEMO_STRESS",
-                                "range": null,
-                                "title": "Stress test for LVGL.",
-                                "type": "bool"
-                            }
-                        ],
-                        "depends_on": null,
-                        "help": null,
-                        "id": "component-config-lv_examples-configuration-select-the-demo-you-want-to-run-",
-                        "name": "LV_EX_CHOICE",
-                        "title": "Select the demo you want to run.",
-                        "type": "choice"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": "LV_USE_DEMO_WIDGETS",
-                        "help": null,
-                        "id": "LV_DEMO_WIDGETS_SLIDESHOW",
-                        "name": "LV_DEMO_WIDGETS_SLIDESHOW",
-                        "range": null,
-                        "title": "Slide demo widgets automatically.",
-                        "type": "bool"
-                    }
-                ],
-                "depends_on": null,
-                "id": "component-config-lv_examples-configuration",
-                "title": "lv_examples configuration",
                 "type": "menu"
             },
             {

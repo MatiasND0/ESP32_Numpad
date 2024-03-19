@@ -1,4 +1,4 @@
-# Install script for directory: /home/hhouse/workspace/lv_port_esp32/main
+# Install script for directory: /home/hhouse/eclipse-workspace/ESP_Numpad/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
