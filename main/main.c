@@ -56,10 +56,10 @@ struct
     lv_obj_t *list;
 } selector_objs;
 
-struct
+struct 
 {
-    lv_obj_t *label[CALC_STACK_MAX];
-} textinput_objs;
+	lv_obj_t *label;
+}textinput_objs;
 
 static int16_t enc_diff = 0;
 static lv_indev_state_t state = LV_INDEV_STATE_REL;
@@ -75,6 +75,7 @@ static void calculator_create(lv_obj_t *parent);
 
 static void focus_cb(lv_group_t *g);
 static void tv_event_cb(lv_obj_t *ta, lv_event_t e);
+static void ls_event_cb(lv_obj_t *ls, lv_event_t e);
 
 void encoderReadTask(void *pvParameters);
 bool mousewheel_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data);
@@ -212,15 +213,9 @@ bool mousewheel_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
     data->enc_diff = enc_diff;
 
     if (gpio_get_level(25) == 1 && state != LV_INDEV_STATE_REL)
-    {
         state = LV_INDEV_STATE_REL;
-        ESP_LOGI(TAG, "Released");
-    }
     else if (gpio_get_level(25) == 0 && state != LV_INDEV_STATE_PR)
-    {
         state = LV_INDEV_STATE_PR;
-        ESP_LOGI(TAG, "Pressed");
-    }
 
     if (state)
         data->state = LV_INDEV_STATE_PR;
@@ -285,6 +280,7 @@ void encoderReadTask(void *pvParameters)
  *   STATIC FUNCTIONS
  **********************/
 
+
 static void focus_cb(lv_group_t *group)
 {
     lv_obj_t *obj = lv_group_get_focused(group);
@@ -338,6 +334,17 @@ static void tv_event_cb(lv_obj_t *ta, lv_event_t e)
     }
 }
 
+static void ls_event_cb(lv_obj_t *ls, lv_event_t e)
+{
+	uint8_t index = 0;
+	if(e == LV_EVENT_CLICKED)
+	{
+		index = lv_list_get_btn_index(ls,lv_list_get_btn_selected(ls));
+		ESP_LOGI(TAG,"El boton nro %d fue presionado.\n",index);
+	}
+
+}
+
 static void selectors_create(lv_obj_t *parent)
 {
     selector_objs.list = lv_list_create(parent, NULL);
@@ -349,18 +356,13 @@ static void selectors_create(lv_obj_t *parent)
     }
     lv_obj_t *bt;
 
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_OK, "1");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_CLOSE, "2");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_EYE_CLOSE, "3");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_TRASH, "4");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_COPY, "5");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_COPY, "6");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_OK, "7");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_CLOSE, "8");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_EYE_CLOSE, "9");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_TRASH, "10");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_COPY, "11");    lv_group_add_obj(g, bt);
-    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_COPY, "12");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 1");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 2");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 3");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 4");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 5");    lv_group_add_obj(g, bt);
+    bt = lv_list_add_btn(selector_objs.list, LV_SYMBOL_KEYBOARD, "Profile 6");    lv_group_add_obj(g, bt);
+    lv_obj_set_event_cb(selector_objs.list, ls_event_cb);
 }
 
 static void calculator_create(lv_obj_t *parent)
@@ -368,16 +370,16 @@ static void calculator_create(lv_obj_t *parent)
     char text_buff[50];
     for (int i = 0; i < CALC_STACK_MAX; i++)
     {
-        textinput_objs.label[i] = lv_label_create(parent, NULL);
-        lv_obj_align(textinput_objs.label[i], NULL, LV_ALIGN_IN_TOP_LEFT, 20, 10 + i * 20);
+        textinput_objs.label = lv_label_create(parent, NULL);
+        lv_obj_align(textinput_objs.label, NULL, LV_ALIGN_IN_TOP_LEFT, 20, 10 + i * 20);
         sprintf(text_buff, "%d:", CALC_STACK_MAX - i);
-        lv_label_set_text(textinput_objs.label[i], text_buff);
+        lv_label_set_text(textinput_objs.label, text_buff);
     }
 
     for (int i = 0; i < CALC_STACK_MAX; i++)
     {
-        textinput_objs.label[i] = lv_label_create(parent, NULL);
-        lv_obj_align(textinput_objs.label[i], NULL, LV_ALIGN_IN_TOP_RIGHT, -20, 10 + i * 20);
-        lv_label_set_text(textinput_objs.label[i], "-");
+        textinput_objs.label = lv_label_create(parent, NULL);
+        lv_obj_align(textinput_objs.label, NULL, LV_ALIGN_IN_TOP_RIGHT, -20, 10 + i * 20);
+        lv_label_set_text(textinput_objs.label, "-");
     }
 }

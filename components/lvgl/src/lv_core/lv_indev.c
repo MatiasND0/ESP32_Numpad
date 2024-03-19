@@ -788,7 +788,6 @@ static void indev_encoder_proc(lv_indev_t * i, lv_indev_data_t * data)
     /*if encoder steps or simulated steps via left/right keys*/
     if(data->enc_diff != 0) {
         /*In edit mode send LEFT/RIGHT keys*/
-        ESP_LOGI(TAG,"enc_diff != 0");
         if(lv_group_get_editing(g)) {
             int32_t s;
             if(data->enc_diff < 0) {
